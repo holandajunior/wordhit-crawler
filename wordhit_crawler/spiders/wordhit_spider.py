@@ -1,5 +1,6 @@
 import scrapy
 from scrapy.selector import Selector
+from wordhit_crawler.items import WordhitItem
 
 class WordHitSpider(scrapy.Spider):
 	name = 'wordhitSpider'
@@ -25,7 +26,12 @@ class WordHitSpider(scrapy.Spider):
 		hitsText = Selector(response).xpath('//*[@id="resultStats"]/text()').extract()[0]
 		hits = hitsText.split(' ')[1]
 		word = response.meta['word']
-		print({ 'word': word, 'hits': hits })
+		
+		wordItem = WordhitItem()
+		wordItem['word'] = word
+		wordItem['hits'] = hits
+
+		yield wordItem
 		
 
 		
