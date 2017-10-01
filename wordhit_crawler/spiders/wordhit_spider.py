@@ -13,13 +13,16 @@ class WordHitSpider(scrapy.Spider):
 
 	def start_requests(self):
 		
-		urls = []
-
+		
 		with open('google_urls.txt', 'rb') as f:
-			urls = [line.strip() for line in f.read().decode('utf8').splitlines() if line.strip()]
+			lines = [line.strip() for line in f.read().decode('utf8').splitlines() if line.strip()]
 
-		for url in urls:
-			word = url.split('=')[1]
+		for line in lines:
+			url, word = line.split(',')
+			
+			# url = infos[0]
+			# word = infos[1]
+
 			yield scrapy.Request(url=url, callback=self.parse, meta={'word': word})
 			
 	def parse(self, response):
