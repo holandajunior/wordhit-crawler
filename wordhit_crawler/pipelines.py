@@ -20,3 +20,24 @@ class MongoPipeline(object):
 			return item
 		else:
 			raise DropItem("Missing hits field in %s" % item)
+
+
+
+class MongoPipelineWords(object):
+
+	def __init__(self):
+		connection = pymongo.MongoClient(
+			settings['MONGODB_SERVER'],
+			settings['MONGODB_PORT']
+		)
+
+		db = connection[settings['MONGODB_DB']]
+		self.collection = db[settings['MONGODB_COLLECTION_TEST']]
+
+	def process_item(self, item, spider):
+		
+		if item['hits']:
+			self.collection.insert({'word': item['word'], 'hits': item['hits']})
+			return item
+		else:
+			raise DropItem("Missing hits field in %s" % item)

@@ -23,11 +23,13 @@ BOT_NAME = 'wordhit'
 
 # Defining pipelines
 ITEM_PIPELINES = {
-	'wordhit_crawler.pipelines.MongoPipeline': 300}
+	# 'wordhit_crawler.pipelines.MongoPipeline': 300
+	'wordhit_crawler.pipelines.MongoPipelineWords': 300}
 
 # Mongo configs
 MONGODB_SERVER = '172.17.0.2'
 MONGODB_PORT = 27017
 MONGODB_DB = 'opiniorizer'
 MONGODB_COLLECTION = 'words'
+MONGODB_COLLECTION_TEST = 'wordstest'
 
